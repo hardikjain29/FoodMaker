@@ -5,9 +5,13 @@ const Main = React.createClass({
   render() {
     return (
       <div>
-        <h1>
-          <Link to="/">Reduxstagram</Link>
-        </h1>
+        <nav className="cyan">
+              <div className="nav-wrapper">
+              <div className="container"> 
+                  <Link className="brand-logo" to="/">Food Maker</Link>
+                  </div>
+              </div>
+          </nav>
         {React.cloneElement({...this.props}.children, {...this.props})}
       </div>
     )

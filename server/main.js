@@ -10,7 +10,11 @@ const app = express()
 
 // Apply gzip compression
 app.use(compress())
-
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
@@ -21,6 +25,10 @@ if (project.env === 'development') {
   app.use(require('webpack-dev-middleware')(compiler, {
     publicPath  : webpackConfig.output.publicPath,
     contentBase : project.paths.client(),
+	headers: { "Access-Control-Allow-Origin": "http://localhost:3000", "Access-Control-Allow-Credentials": "true" },
+headers: {
+  "Access-Control-Allow-Origin": "http://localhost:3000"
+},
     hot         : true,
     quiet       : project.compiler_quiet,
     noInfo      : project.compiler_quiet,
@@ -47,6 +55,7 @@ if (project.env === 'development') {
         return next(err)
       }
       res.set('content-type', 'text/html')
+	res.setHeader('Access-Control-Allow-Origin', '*')
       res.send(result)
       res.end()
     })
@@ -64,6 +73,7 @@ if (project.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
   app.use(express.static(project.paths.dist()))
+
 }
 
 module.exports = app
