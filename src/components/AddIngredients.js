@@ -4,12 +4,14 @@ import Recipes from './Recipes';
 import Loader from 'react-loader';
 
 const AddIngredients = React.createClass({
-	handleSubmit(e){
-		e.preventDefault();
-		const ingr = this.refs.ingredient.value;
-		this.props.addIngredient(ingr);
-		this.refs.ingredient.value = " ";
-	},
+  handleSubmit(e){
+    e.preventDefault();
+    const ingr = this.refs.ingredient.value;
+    if (ingr) {
+      this.props.addIngredient(ingr);
+      this.refs.ingredient.value = " ";
+    }
+  },
 
   render() {
     var s = {float:'center'};
